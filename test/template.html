@@ -78,8 +78,26 @@
 
 		<!-- script -->
 		<script type="text/javascript">
+			//for ordinal
+			var NK = [
+				"A", "B", "C", "D", "E", "F", "G",
+				"H", "I", "J", "K", "L", "M", "N",
+				"O", "P", "Q", "R", "S", "T",
+				"U", "V", "W", "X", "Y", "Z"
+			];
+			//for time
+			var BT = (new Data()).getTime();
 			//the chart return api
 			var CAPI = null;
+
+			//build data by Math.random
+			function buildData () {}
+			function buildName (_) {
+				return NK[_ % NK.length] + (Math.floor(_ / NK.length) + 1);
+			}
+			function buildTime (_, __) {
+				return Math.floor(_ / __) + 1;
+			}
 
 			//for resize event(delay 100ms)
 			var RTimer = null;
