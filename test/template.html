@@ -78,6 +78,10 @@
 
 		<!-- script -->
 		<script type="text/javascript">
+			//the chart return api
+			var CAPI = null;
+
+			//for resize event(delay 100ms)
 			var RTimer = null;
 			$(window).resize(function(event) {
 				if (RTimer != null) clearTimeout(RTimer);
