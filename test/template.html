@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8" content="">
+		<title>Template</title>
+		
+		<!-- ********plugin******** -->
+		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+		<!-- ********custom******** -->
+		<link rel="stylesheet" type="text/css" href="../src/common.css">
+		<link rel="stylesheet" type="text/css" href="../src/barchart/barchart.css">
+		<style type="text/css">
+			.header a:hover{
+				text-decoration: none;
+			}
+			.menu{
+				margin-top: -15px;
+				margin-bottom: 20px;
+			}
+			.chart{
+				background-color: aliceblue;
+			}
+		</style>
+
+		<!-- ********plugin******** -->
+		<script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+		<script type="text/javascript" src="js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="js/d3.min.js"></script>
+		<!-- ********custom******** -->
+		<script type="text/javascript" src="../src/common.js"></script>
+		<script type="text/javascript" src="../src/barchart/barchart.js"></script>
+
+	</head>
+	<body>
+		<div class="container-fluid">
+			<!-- Header -->
+			<div class="page-header header">
+				<h1>
+					<a href="#">Template</a>
+				</h1>
+			</div>
+			<!-- Menu -->
+			<div class="row menu">
+				<span class="col-md-1">
+					<input type="checkbox" class="cursor-pointer" value="showLabel" checked="checked">
+					<span class="cursor-pointer">坐标系</span>
+				</span>
+				<span class="col-md-1">
+					<input type="checkbox" class="cursor-pointer" value="showTips">
+					<span class="cursor-pointer">提示框</span>
+				</span>
+				<span class="col-md-1">
+					<input type="checkbox" class="cursor-pointer" value="row">
+					<span class="cursor-pointer">水平网格线</span>
+				</span>
+				<span class="col-md-1">
+					<input type="checkbox" class="cursor-pointer" value="column" checked="checked">
+					<span class="cursor-pointer">竖直网格线</span>
+				</span>
+				<span class="col-md-1">
+					<input type="checkbox" class="cursor-pointer" value="brush" checked="checked">
+					<span class="cursor-pointer">拖选事件</span>
+				</span>
+				<span class="col-md-1">
+					<select name="legendPosition" class="cursor-pointer">
+						<option value="none">不显示</option>
+						<option value="top" selected="selected">上</option>
+						<option value="bottom">下</option>
+						<option value="left">左</option>
+						<option value="right">右</option>
+					</select>
+					图例
+				</span>
+			</div>
+			<!-- Chart -->
+			<div class="well chart"></div>
+		</div>
+
+		<!-- script -->
+		<script type="text/javascript">
+			var RTimer = null;
+			$(window).resize(function(event) {
+				if (RTimer != null) clearTimeout(RTimer);
+				RTimer = setTimeout(function () {
+					var $chart = $('.chart');
+					var pos = $chart.position();
+					var WH = $(window).height();
+					var CH = WH - pos.top - 60;
+					if (CH < 300) CH = 300;
+					$chart.height(CH);
+
+					//--begin
+
+					//--end
+				}, 100);
+			}).resize();
+
+			$('.menu > span > span').unbind("click").click(function(event) {
+				$(this).siblings('input[type=checkbox]').click();
+			});
+			$('.menu input[type=checkbox]').unbind("click").click(function(event) {
+				//this.checked
+			});
+		</script>
+	</body>
+</html>
