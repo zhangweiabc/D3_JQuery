@@ -1,0 +1,4 @@
+.bar-chart{}
+.bar-chart .bar:hover{
+	opacity: 0.7;
+}

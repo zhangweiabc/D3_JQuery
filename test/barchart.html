@@ -46,6 +46,15 @@
 					<span class="cursor-pointer">坐标系</span>
 				</span>
 				<span class="col-md-1">
+					<select name="axisPosition" class="cursor-pointer">
+						<option value="left-bottom" selected="selected">左-下</option>
+						<option value="left-top">左-上</option>
+						<option value="right-bottom">右-下</option>
+						<option value="right-top">右-上</option>
+					</select>
+					方位
+				</span>
+				<span class="col-md-1">
 					<input type="checkbox" class="cursor-pointer" value="showTips">
 					<span class="cursor-pointer">提示框</span>
 				</span>
@@ -71,6 +80,16 @@
 					</select>
 					图例
 				</span>
+				<span class="col-md-1">
+					<select name="dataCount" class="cursor-pointer">
+						<option value="5" selected="selected">5</option>
+						<option value="10">10</option>
+						<option value="20">20</option>
+						<option value="40">40</option>
+						<option value="80">80</option>
+					</select>
+					条数据
+				</span>
 			</div>
 			<!-- Chart -->
 			<div class="well chart"></div>
@@ -90,17 +109,26 @@
 			//the chart return api
 			var CAPI = null;
 
-			$('.chart').BarChart({
-				series: [
-					{name: "A", value: 10},
-					{name: "C", value: 50},
-				]
-			});
+			setTimeout(function () {
+				CAPI = $('.chart').BarChart({
+					series: buildData(5, 100)
+				});
+			}, 200);
 
 			//build data by Math.random
-			function buildData () {}
+			function buildData (count, multi10) {
+				if (count < 5) count = 5;
+				var _ = [];
+				for (var i = 0; i < count; i++) {
+					_.push({name: buildName(i), value: buildValue(multi10)});
+				}
+				return _;
+			}
 			function buildName (_) {
 				return NK[_ % NK.length] + (Math.floor(_ / NK.length) + 1);
+			}
+			function buildValue (_) {
+				return (Math.random() * _).toString().substring(0, _.toString().length);
 			}
 			function buildTime (_, __) {
 				return Math.floor(_ / __) + 1;
@@ -119,7 +147,7 @@
 					$chart.height(CH);
 
 					//--begin
-
+					CAPI && CAPI.redraw();
 					//--end
 				}, 100);
 			}).resize();
@@ -129,6 +157,20 @@
 			});
 			$('.menu input[type=checkbox]').unbind("click").click(function(event) {
 				//this.checked
+			});
+			$('.menu select').change(function(event) {
+				var key = $(this).attr("name");
+				var val = $(this).val();
+
+				if (key == "axisPosition") {
+					CAPI.setOption("axis_y", val.split("-")[0])
+						.setOption("axis_x", val.split("-")[1]);
+					return;
+				}
+				if (key == "dataCount") {
+					CAPI && CAPI.setOption("series", buildData(+val, 1000));
+					return;
+				}
 			});
 		</script>
 	</body>
